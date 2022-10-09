@@ -1,14 +1,20 @@
 import "./App.css";
 import { useState, useEffect } from "react";
-import { storage } from "./firebase";
+import { db, storage } from "./firebase";
 import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
+import { collection, doc, getDocs, addDoc } from "firebase/firestore";
 
 function App() {
+  const [printJobs, setPrintJobs] = useState([]);
   const [fileUpload, setFileUpload] = useState(null);
   const [fileList, setFileList] = useState([]);
+  const [newTitle, setNewTitle] = useState("");
+  const [newCopyNumber, setNewCopyNumber] = useState(0);
 
   const fileListRef = ref(storage, "files/");
+
+  const printJobsCollectionRef = collection(db, "print-info");
 
   const uploadFile = () => {
     if (fileUpload === null) return;
@@ -20,6 +26,22 @@ function App() {
       });
     });
   };
+
+  const print = async () => {
+    await addDoc(printJobsCollectionRef, {
+      title: newTitle,
+      copyNumber: newCopyNumber,
+    });
+  };
+
+  useEffect(() => {
+    const getPrintJobs = async () => {
+      const data = await getDocs(printJobsCollectionRef);
+      setPrintJobs(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+
+    getPrintJobs();
+  }, []);
 
   useEffect(() => {
     listAll(fileListRef).then((response) => {
@@ -33,6 +55,24 @@ function App() {
 
   return (
     <div className="App">
+      <input
+        placeholder="Title..."
+        onChange={(e) => setNewTitle(e.target.value)}
+      />
+      <input
+        type="number"
+        placeholder="Number of copies..."
+        onChange={(e) => setNewCopyNumber(e.target.value)}
+      />
+      <button onClick={print}>Print</button>
+      {printJobs.map((printJob) => {
+        return (
+          <div>
+            <p>Title: {printJob.title}</p>
+            <p>Number of copies: {printJob.copyNumber}</p>
+          </div>
+        );
+      })}
       <input
         type="file"
         onChange={(event) => {
