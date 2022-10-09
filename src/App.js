@@ -4,13 +4,19 @@ import { db, storage } from "./firebase";
 import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 import { v4 } from "uuid";
 import { collection, doc, getDocs, addDoc } from "firebase/firestore";
+import { Form } from "./components/Form/Form.jsx";
 
 function App() {
   const [printJobs, setPrintJobs] = useState([]);
   const [fileUpload, setFileUpload] = useState(null);
   const [fileList, setFileList] = useState([]);
-  const [newTitle, setNewTitle] = useState("");
-  const [newCopyNumber, setNewCopyNumber] = useState(0);
+  const [title, setTitle] = useState("");
+  const [copyNumber, setCopyNumber] = useState(0);
+  const [paperSize, setPaperSize] = useState("A4");
+  const [colour, setColour] = useState("Black And White");
+  const [side, setSide] = useState("Double");
+
+  const status = ["Queued", "Printing", "Cancelled", "Complete"];
 
   const fileListRef = ref(storage, "files/");
 
@@ -27,10 +33,14 @@ function App() {
     });
   };
 
-  const print = async () => {
+  const onSubmit = async () => {
     await addDoc(printJobsCollectionRef, {
-      title: newTitle,
-      copyNumber: newCopyNumber,
+      title: title,
+      copyNumber: copyNumber,
+      paperSize: paperSize,
+      colour: colour,
+      side: side,
+      status: status[Math.floor(Math.random() * status.length)],
     });
   };
 
@@ -55,24 +65,33 @@ function App() {
 
   return (
     <div className="App">
-      <input
-        placeholder="Title..."
-        onChange={(e) => setNewTitle(e.target.value)}
+      <Form
+        onTitleChange={(e) => setTitle(e.target.value)}
+        onCopyNumberChange={(e) => setCopyNumber(e.target.value)}
+        onPaperSizeChange={(e) => setPaperSize(e.target.value)}
+        onColourChange={(e) => setColour(e.target.value)}
+        onSideChange={(e) => setSide(e.target.value)}
+        onSubmit={onSubmit}
+        paperSize={paperSize}
+        colour={colour}
+        side={side}
+        disabled={title === "" || copyNumber === 0}
       />
-      <input
-        type="number"
-        placeholder="Number of copies..."
-        onChange={(e) => setNewCopyNumber(e.target.value)}
-      />
-      <button onClick={print}>Print</button>
-      {printJobs.map((printJob) => {
-        return (
-          <div>
-            <p>Title: {printJob.title}</p>
-            <p>Number of copies: {printJob.copyNumber}</p>
-          </div>
-        );
-      })}
+      {printJobs
+        .slice(-10)
+        .map((printJob) => {
+          return (
+            <div>
+              <p>Title: {printJob.title}</p>
+              <p>Number of copies: {printJob.copyNumber}</p>
+              <p>Paper size: {printJob.paperSize}</p>
+              <p>Colour: {printJob.colour}</p>
+              <p>Side: {printJob.side}</p>
+              <p>Status: {printJob.status}</p>
+            </div>
+          );
+        })
+        .reverse()}
       <input
         type="file"
         onChange={(event) => {
@@ -80,9 +99,9 @@ function App() {
         }}
       />
       <button onClick={uploadFile}>Upload File</button>
-      {fileList.map((url) => {
+      {/* {fileList.map((url) => {
         return <object data={url} width="400" height="300"></object>;
-      })}
+      })} */}
     </div>
   );
 }
