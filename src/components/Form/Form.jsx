@@ -7,6 +7,8 @@ export const Form = ({
   onColourChange,
   onSideChange,
   onSubmit,
+  onFileChange,
+  onFileUpload,
   paperSize,
   colour,
   side,
@@ -33,6 +35,8 @@ export const Form = ({
         <option value="Single">Single</option>
         <option value="Double">Double</option>
       </select>
+      <input type="file" onChange={onFileChange} />
+      <button onClick={onFileUpload}>Upload File</button>
       <button onClick={onSubmit} disabled={disabled}>
         Print
       </button>
