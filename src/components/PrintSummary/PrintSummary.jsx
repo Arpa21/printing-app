@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { db, storage } from "../../firebase";
-import { collection, doc, getDocs, addDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+import { db } from "../../firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 export const PrintSummary = () => {
   const [printJobs, setPrintJobs] = useState([]);
+
+  let navigate = useNavigate();
 
   const printJobsCollectionRef = collection(db, "print-info");
 
@@ -18,6 +21,7 @@ export const PrintSummary = () => {
 
   return (
     <div>
+      <button onClick={() => navigate("/")}>Back</button>
       {printJobs
         .slice(-10)
         .map((printJob) => {
