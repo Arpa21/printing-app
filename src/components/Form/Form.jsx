@@ -1,4 +1,7 @@
 import React from "react";
+import { Textfield } from "../Textfield";
+import MenuItem from "@material-ui/core/MenuItem";
+import { Button } from "../Button";
 
 export const Form = ({
   onTitleChange,
@@ -16,30 +19,42 @@ export const Form = ({
 }) => {
   return (
     <div>
-      <input placeholder="Title..." onChange={onTitleChange} />
-      <input
+      <Textfield
+        placeholder="Title..."
+        onChange={onTitleChange}
+        label="Title"
+      />
+      <Textfield
         type="number"
+        label="Number of Copies"
         placeholder="Number of copies..."
         onChange={onCopyNumberChange}
       />
-      <select value={paperSize} onChange={onPaperSizeChange}>
-        <option value="A3">A3</option>
-        <option value="A4">A4</option>
-        <option value="Letter">Letter</option>
-      </select>
-      <select value={colour} onChange={onColourChange}>
-        <option value="Colour">Colour</option>
-        <option value="Black And White">Black and White</option>
-      </select>
-      <select value={side} onChange={onSideChange}>
-        <option value="Single">Single</option>
-        <option value="Double">Double</option>
-      </select>
+      <Textfield
+        select
+        label="Paper Size"
+        value={paperSize}
+        onChange={onPaperSizeChange}
+      >
+        <MenuItem value="A3">A3</MenuItem>
+        <MenuItem value="A4">A4</MenuItem>
+        <MenuItem value="Letter">Letter</MenuItem>
+      </Textfield>
+      <Textfield select label="Colour" value={colour} onChange={onColourChange}>
+        <MenuItem value="Colour">Colour</MenuItem>
+        <MenuItem value="Black And White">Black And White</MenuItem>
+      </Textfield>
+      <Textfield select label="Side" value={side} onChange={onSideChange}>
+        <MenuItem value="Single">Single</MenuItem>
+        <MenuItem value="Double">Double</MenuItem>
+      </Textfield>
       <input type="file" onChange={onFileChange} />
-      <button onClick={onFileUpload}>Upload File</button>
-      <button onClick={onSubmit} disabled={disabled}>
+      <Button variant="contained" onClick={onFileUpload}>
+        Upload
+      </Button>
+      <Button onClick={onSubmit} variant="contained" disabled={disabled}>
         Print
-      </button>
+      </Button>
     </div>
   );
 };

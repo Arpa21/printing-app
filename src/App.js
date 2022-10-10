@@ -5,11 +5,13 @@ import { PrintSummary } from "./components/PrintSummary/PrintSummary.jsx";
 
 export const App = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/print-summary" element={<PrintSummary />} />
-      </Routes>
-    </Router>
+    <div className="App">
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/print-summary" element={<PrintSummary />} />
+        </Routes>
+      </Router>
+    </div>
   );
 };

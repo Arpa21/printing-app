@@ -5,6 +5,8 @@ import { ref, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
 import { collection, addDoc } from "firebase/firestore";
 import { Form } from "../Form/Form.jsx";
+import { HomeWrapper } from "./Home.style";
+import { Button } from "../Button";
 
 export const Home = () => {
   const [fileUpload, setFileUpload] = useState(null);
@@ -39,7 +41,7 @@ export const Home = () => {
   };
 
   return (
-    <div className="App">
+    <HomeWrapper>
       <Form
         onTitleChange={(e) => setTitle(e.target.value)}
         onCopyNumberChange={(e) => setCopyNumber(e.target.value)}
@@ -54,9 +56,9 @@ export const Home = () => {
         side={side}
         disabled={title === "" || copyNumber === 0}
       />
-      <button onClick={() => navigate("/print-summary")}>
+      <Button onClick={() => navigate("/print-summary")} variant="outlined">
         Print Summaries
-      </button>
-    </div>
+      </Button>
+    </HomeWrapper>
   );
 };
