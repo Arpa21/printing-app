@@ -1,15 +1,14 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 import { db, storage } from "./firebase";
-import { ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
-import { collection, doc, getDocs, addDoc } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 import { Form } from "./components/Form/Form.jsx";
 
 function App() {
   const [printJobs, setPrintJobs] = useState([]);
   const [fileUpload, setFileUpload] = useState(null);
-  const [fileList, setFileList] = useState([]);
   const [title, setTitle] = useState("");
   const [copyNumber, setCopyNumber] = useState(0);
   const [paperSize, setPaperSize] = useState("A4");
@@ -18,19 +17,13 @@ function App() {
 
   const status = ["Queued", "Printing", "Cancelled", "Complete"];
 
-  const fileListRef = ref(storage, "files/");
-
   const printJobsCollectionRef = collection(db, "print-info");
 
   const uploadFile = () => {
     if (fileUpload === null) return;
 
     const fileRef = ref(storage, `files/${fileUpload.name + v4()}`);
-    uploadBytes(fileRef, fileUpload).then((snapshot) => {
-      getDownloadURL(snapshot.ref).then((url) => {
-        setFileList((prev) => [...prev, url]);
-      });
-    });
+    uploadBytes(fileRef, fileUpload);
   };
 
   const onSubmit = async () => {
@@ -53,15 +46,6 @@ function App() {
     getPrintJobs();
   }, []);
 
-  useEffect(() => {
-    listAll(fileListRef).then((response) => {
-      response.items.forEach((item) => {
-        getDownloadURL(item).then((url) => {
-          setFileList((prev) => [...prev, url]);
-        });
-      });
-    });
-  }, []);
 
   return (
     <div className="App">
@@ -99,9 +83,6 @@ function App() {
         }}
       />
       <button onClick={uploadFile}>Upload File</button>
-      {/* {fileList.map((url) => {
-        return <object data={url} width="400" height="300"></object>;
-      })} */}
     </div>
   );
 }
