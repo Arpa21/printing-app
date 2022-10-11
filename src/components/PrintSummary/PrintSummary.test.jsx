@@ -11,8 +11,12 @@ jest.mock("react-router-dom", () => ({
 }));
 
 const printJobs = [];
+const isLoading = true;
 
-jest.spyOn(React, "useState").mockImplementationOnce(() => [printJobs, {}]);
+jest
+  .spyOn(React, "useState")
+  .mockImplementationOnce(() => [printJobs, {}])
+  .mockImplementationOnce(() => [isLoading, {}]);
 
 describe("<PrintSummary />", () => {
   const createComponent = () => shallow(<PrintSummary />);

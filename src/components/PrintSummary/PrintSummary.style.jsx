@@ -20,3 +20,15 @@ export const Summary = styled.div`
     margin-top: 24px;
   }
 `;
+
+export const LoadingWrapper = styled.div`
+  color: rgb(232, 230, 227);
+  font-weight: 600;
+  font-size: 24px;
+`;
+
+export const NoSummary = styled.div`
+  color: rgb(232, 230, 227);
+  font-weight: 600;
+  font-size: 24px;
+`;
