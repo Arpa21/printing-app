@@ -16,7 +16,7 @@ const title = "";
 const copyNumber = 0;
 const paperSize = "A4";
 const colour = "Black And White";
-let side = "Double";
+const side = "Double";
 
 jest
   .spyOn(React, "useState")
