@@ -4,7 +4,7 @@ export const HomeWrapper = styled.div`
   display: flex;
   justify-content: center;
   gap: 60px;
-  margin-top: 20px;
+  margin-top: 40px;
 
   img {
     max-height: 300px;

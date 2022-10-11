@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { db } from "../../firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { Button } from "../Button";
-import { Summary } from "./PrintSummary.style";
+import { SummaryPage, Summary } from "./PrintSummary.style";
 
 export const PrintSummary = () => {
   const [printJobs, setPrintJobs] = useState([]);
@@ -22,7 +22,7 @@ export const PrintSummary = () => {
   }, []);
 
   return (
-    <div>
+    <SummaryPage>
       <Button onClick={() => navigate("/")} variant="outlined">
         Back
       </Button>
@@ -45,6 +45,6 @@ export const PrintSummary = () => {
               .reverse()
           : "No print summary to show"}
       </Summary>
-    </div>
+    </SummaryPage>
   );
 };
