@@ -16,6 +16,7 @@ export const HomeWrapper = styled.div`
 
     img {
       max-height: 200px;
+      align-self: center;
     }
   }
 `;
