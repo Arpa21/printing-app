@@ -4,7 +4,7 @@ import { db, storage } from "../../firebase.js";
 import { ref, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
 import { collection, addDoc } from "firebase/firestore";
-import { Form } from "../Form/Form.jsx";
+import { Form } from "../Form";
 import { HomeWrapper } from "./Home.style";
 import { Button } from "../Button";
 

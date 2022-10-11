@@ -5,4 +5,11 @@
   font-size: 16px;
   font-weight: normal;
   color: #c2bdb5;
+  padding: 40px;
+}
+
+@media (max-width: 768px) {
+  .App {
+    padding: 20px;
+  }
 }
