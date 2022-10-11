@@ -8,7 +8,6 @@ export const HomeWrapper = styled.div`
 
   img {
     max-height: 300px;
-    align-self: center;
   }
 
   @media (max-width: 768px) {
@@ -17,7 +16,6 @@ export const HomeWrapper = styled.div`
 
     img {
       max-height: 200px;
-      align-self: center;
     }
   }
 `;
