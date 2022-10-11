@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 export const ButtonWrapper = styled.div`
-  width: 720px;
+  width: 500px;
 
   @media (max-width: 768px) {
-    width: 300px;
+    width: 200px;
   }
 
   .MuiButton-contained {

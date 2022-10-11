@@ -5,8 +5,9 @@ import { ref, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
 import { collection, addDoc } from "firebase/firestore";
 import { Form } from "../Form";
-import { HomeWrapper } from "./Home.style";
+import { HomeWrapper, MainContent } from "./Home.style";
 import { Button } from "../Button";
+import papercutUni from "../../assets/papercut-uni.png";
 
 export const Home = () => {
   const [fileUpload, setFileUpload] = useState(null);
@@ -42,23 +43,26 @@ export const Home = () => {
 
   return (
     <HomeWrapper>
-      <Form
-        onTitleChange={(e) => setTitle(e.target.value)}
-        onCopyNumberChange={(e) => setCopyNumber(e.target.value)}
-        onPaperSizeChange={(e) => setPaperSize(e.target.value)}
-        onColourChange={(e) => setColour(e.target.value)}
-        onSideChange={(e) => setSide(e.target.value)}
-        onSubmit={onSubmit}
-        onFileChange={(e) => setFileUpload(e.target.files[0])}
-        onFileUpload={uploadFile}
-        paperSize={paperSize}
-        colour={colour}
-        side={side}
-        disabled={title === "" || copyNumber === 0}
-      />
-      <Button onClick={() => navigate("/print-summary")} variant="outlined">
-        Print Summaries
-      </Button>
+      <MainContent>
+        <Form
+          onTitleChange={(e) => setTitle(e.target.value)}
+          onCopyNumberChange={(e) => setCopyNumber(e.target.value)}
+          onPaperSizeChange={(e) => setPaperSize(e.target.value)}
+          onColourChange={(e) => setColour(e.target.value)}
+          onSideChange={(e) => setSide(e.target.value)}
+          onSubmit={onSubmit}
+          onFileChange={(e) => setFileUpload(e.target.files[0])}
+          onFileUpload={uploadFile}
+          paperSize={paperSize}
+          colour={colour}
+          side={side}
+          disabled={title === "" || copyNumber === 0}
+        />
+        <Button onClick={() => navigate("/print-summary")} variant="outlined">
+          Print Summaries
+        </Button>
+      </MainContent>
+      <img src={papercutUni} alt="papercut uni" />
     </HomeWrapper>
   );
 };
