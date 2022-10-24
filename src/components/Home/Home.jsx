@@ -7,7 +7,7 @@ import { collection, addDoc } from "firebase/firestore";
 import { Form } from "../Form";
 import { HomeWrapper, MainContent } from "./Home.style";
 import { Button } from "../Button";
-import papercutUni from "../../assets/papercut-uni.png";
+import uniArtwork from "../../assets/uni.png";
 
 export const Home = () => {
   const [fileUpload, setFileUpload] = useState(null);
@@ -62,7 +62,7 @@ export const Home = () => {
           Print Summaries
         </Button>
       </MainContent>
-      <img src={papercutUni} alt="papercut uni" />
+      <img src={uniArtwork} alt="papercut uni" />
     </HomeWrapper>
   );
 };
